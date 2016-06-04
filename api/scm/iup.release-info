@@ -1,0 +1,18 @@
+;; -*- mode: Scheme; -*-
+(repo fossil "http://chust.org/fossils/{egg-name}")
+
+(uri meta-file "http://chust.org/fossils/{egg-name}/doc/v{egg-release}/chicken/{egg-name}.meta")
+(release "1.7.0")
+(release "1.6.0")
+(release "1.5.0")
+(release "1.4.0")
+(release "1.3.0")
+(release "1.2.1")
+(release "1.2.0")
+(release "1.1.0")
+
+(uri meta-file "http://anonymous@code.call-cc.org/svn/chicken-eggs/release/4/{egg-name}/tags/{egg-release}/{egg-name}.meta" eggs)
+(release "1.0.3" (uri eggs))
+(release "1.0.2" (uri eggs))
+(release "1.0.1" (uri eggs))
+(release "1.0.0" (uri eggs))

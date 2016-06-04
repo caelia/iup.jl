@@ -1,0 +1,209 @@
+;; -*- mode: Scheme; tab-width: 2; -*- ;;
+
+(define modules
+	`(-j iup
+		-j iup-base -j iup-controls -j iup-dialogs
+		,@(cond-expand
+			 [disable-iup-glcanvas
+				'()]
+			 [else
+				'(-j iup-glcanvas)])
+		,@(cond-expand
+			 [(or disable-iup-glcanvas disable-iup-glcontrols)
+				'()]
+			 [else
+				'(-j iup-glcontrols)])
+		,@(cond-expand
+			 [disable-iup-plot
+				'()]
+			 [else
+				'(-j iup-plot)])
+		,@(cond-expand
+			 [disable-iup-mglplot
+				'()]
+			 [else
+				'(-j iup-mglplot)])
+		,@(cond-expand
+			 [disable-iup-pplot
+				'()]
+			 [else
+				'(-j iup-pplot)])
+		,@(cond-expand
+			 [disable-iup-scintilla
+				'()]
+			 [else
+				'(-j iup-scintilla)])
+		,@(cond-expand
+			 [disable-iup-web
+				'()]
+			 [else
+				'(-j iup-web)])
+		,@(cond-expand
+			 [enable-iup-ole
+				'(-j iup-ole)]
+			 [else
+				'()])
+		,@(cond-expand
+			 [disable-iup-config
+				'()]
+			 [else
+				'(-j iup-config)])))
+
+(define import-libraries
+	`("iup.import.so"
+		"iup-base.import.so" "iup-controls.import.so" "iup-dialogs.import.so"
+		,@(cond-expand
+			 [disable-iup-glcanvas
+				'()]
+			 [else
+				'("iup-glcanvas.import.so")])
+		,@(cond-expand
+			 [(or disable-iup-glcanvas disable-iup-glcontrols)
+				'()]
+			 [else
+				'("iup-glcontrols.import.so")])
+		,@(cond-expand
+			 [disable-iup-plot
+				'()]
+			 [else
+				'("iup-plot.import.so")])
+		,@(cond-expand
+			 [disable-iup-mglplot
+				'()]
+			 [else
+				'("iup-mglplot.import.so")])
+		,@(cond-expand
+			 [disable-iup-pplot
+				'()]
+			 [else
+				'("iup-pplot.import.so")])
+		,@(cond-expand
+			 [disable-iup-scintilla
+				'()]
+			 [else
+				'("iup-scintilla.import.so")])
+		,@(cond-expand
+			 [disable-iup-web
+				'()]
+			 [else
+				'("iup-web.import.so")])
+		,@(cond-expand
+			 [enable-iup-ole
+				'("iup-ole.import.so")]
+			 [else
+				'()])
+		,@(cond-expand
+			 [disable-iup-config
+				'()]
+			 [else
+				'("iup-config.import.so")])))
+
+(define native-libraries
+	`("-lcallback"
+		"-liup" "-liupim" "-liupimglib" "-liupcontrols"
+		,@(cond-expand
+			 [disable-iup-matrixex
+				'()]
+			 [else
+				'("-liupmatrixex")])
+		,@(cond-expand
+			 [disable-iup-glcanvas
+				'()]
+			 [else
+				'("-liupgl")])
+		,@(cond-expand
+			 [(or disable-iup-glcanvas disable-iup-glcontrols)
+				'()]
+			 [else
+				'("-liupglcontrols")])
+		,@(cond-expand
+			 [disable-iup-plot
+				'()]
+			 [else
+				'("-liup_plot")])
+		,@(cond-expand
+			 [disable-iup-mglplot
+				'()]
+			 [else
+				'("-liup_mglplot")])
+		,@(cond-expand
+			 [disable-iup-pplot
+				'()]
+			 [else
+				'("-liup_pplot")])
+		,@(cond-expand
+			 [disable-iup-scintilla
+				'()]
+			 [else
+				'("-liup_scintilla")])
+		,@(cond-expand
+			 [disable-iup-web
+				'()]
+			 [else
+				'("-liupweb")])
+		,@(cond-expand
+			 [enable-iup-ole
+				'("-liupole" "-loleaut32" "-luuid")]
+			 [else
+				'()])))
+
+(compile -s -O2 -d1 "iup.scm" ,@modules ,@native-libraries)
+(compile -c -O2 -d1 "iup.scm" -unit iup)
+(compile -s -O2 -d0 "iup.import.scm")
+(compile -s -O2 -d0 "iup-base.import.scm")
+(compile -s -O2 -d0 "iup-controls.import.scm")
+(compile -s -O2 -d0 "iup-dialogs.import.scm")
+
+(cond-expand
+ [disable-iup-glcanvas]
+ [else
+	(compile -s -O2 -d0 "iup-glcanvas.import.scm")])
+(cond-expand
+ [(or disable-iup-glcanvas disable-iup-glcontrols)]
+ [else
+	(compile -s -O2 -d0 "iup-glcontrols.import.scm")])
+(cond-expand
+ [disable-iup-plot]
+ [else
+	(compile -s -O2 -d0 "iup-plot.import.scm")])
+(cond-expand
+ [disable-iup-mglplot]
+ [else
+	(compile -s -O2 -d0 "iup-mglplot.import.scm")])
+(cond-expand
+ [disable-iup-pplot]
+ [else
+	(compile -s -O2 -d0 "iup-pplot.import.scm")])
+(cond-expand
+ [disable-iup-scintilla]
+ [else
+	(compile -s -O2 -d0 "iup-scintilla.import.scm")])
+(cond-expand
+ [disable-iup-web]
+ [else
+	(compile -s -O2 -d0 "iup-web.import.scm")])
+(cond-expand
+ [enable-iup-ole
+	(compile -s -O2 -d0 "iup-ole.import.scm")]
+ [else])
+(cond-expand
+ [disable-iup-config]
+ [else
+	(compile -s -O2 -d0 "iup-config.import.scm")])
+
+(install-extension
+ 'iup
+ `("iup.so" "iup.o" "iup-types.scm" ,@import-libraries)
+ `((version 1.8.0)
+	 (static "iup-base.o")
+	 (static-options ,(string-intersperse native-libraries))))
+
+(compile -s -O2 -d1 "iup-dynamic.scm" -j iup-dynamic)
+(compile -c -O2 -d1 "iup-dynamic.scm" -j iup-dynamic -unit iup-dynamic)
+(compile -s -O2 -d0 "iup-dynamic.import.scm")
+
+(install-extension
+ 'iup-dynamic
+ '("iup-dynamic.so" "iup-dynamic.o" "iup-dynamic.import.so")
+ '((version 1.8.0)
+   (static "iup-dynamic.o")))

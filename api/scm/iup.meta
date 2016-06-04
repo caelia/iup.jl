@@ -1,0 +1,8 @@
+;; -*- mode: Scheme; -*-
+((category ui)
+ (license "BSD")
+ (author "Thomas Chust")
+ (synopsis "Bindings to the IUP GUI library")
+ (doc-from-wiki)
+ (needs srfi-42)
+ (files "iup.scm" "iup-types.scm" "iup-base.scm" "iup-controls.scm" "iup-dialogs.scm" "iup-glcanvas.scm" "iup-glcontrols.scm" "iup-plot.scm" "iup-mglplot.scm" "iup-pplot.scm" "iup-scintilla.scm" "iup-web.scm" "iup-ole.scm" "iup-config.scm" "iup-dynamic.scm" "iup.setup" "iup.meta" "iup.release-info"))
